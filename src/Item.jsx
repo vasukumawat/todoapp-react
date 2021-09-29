@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Item = ({ todoItem, completedTodo, setTodos, todos }) => {
+const Item = ({ handleDelete, todoItem, completedTodo, setTodos, todos }) => {
   const [edit, setEdit] = useState(false);
   const [todo, setTodo] = useState(todoItem.task);
 
@@ -29,16 +29,11 @@ const Item = ({ todoItem, completedTodo, setTodos, todos }) => {
     <div className="todo" key={todoItem.id}>
       {!edit ? (
         <>
-          <input
-            type="checkbox"
-            checked={todoItem.completed}
-            onChange={() => completedTodo(todoItem.id)}
-            disabled={todoItem.completed ? true : false}
-          />{" "}
           <span>{todoItem.task}</span>{" "}
           <button onClick={handleEdit} disabled={todoItem.completed}>
             Edit
           </button>
+          <button onClick={() => handleDelete(todoItem.id)}>Delete</button>
         </>
       ) : (
         <>

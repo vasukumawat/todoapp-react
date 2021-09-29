@@ -6,13 +6,13 @@ const Todo = () => {
 
   const [todo, setTodo] = useState("");
 
-  useEffect(() => {
-    if (localStorage.items) {
-      setTodos(JSON.parse(localStorage.getItem("items")));
-    } else {
-      setTodos([]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.items) {
+  //     setTodos(JSON.parse(localStorage.getItem("items")));
+  //   } else {
+  //     setTodos([]);
+  //   }
+  // }, []);
   const handleChange = (e) => {
     setTodo(e.target.value);
   };
@@ -27,7 +27,7 @@ const Todo = () => {
       task: todo,
       completed: false,
     };
-    localStorage.setItem("items", JSON.stringify([...todos, todoObject]));
+    // localStorage.setItem("items", JSON.stringify([...todos, todoObject]));
     setTodos([...todos, todoObject]);
     setTodo("");
   };
@@ -40,8 +40,14 @@ const Todo = () => {
 
       return list;
     });
-    localStorage.setItem("items", JSON.stringify(newList));
+    // localStorage.setItem("items", JSON.stringify(newList));
     setTodos(newList);
+  };
+
+  const handleDelete = (id) => {
+    const todoLeft = todos.filter((el) => el.id !== id);
+
+    setTodos(todoLeft);
   };
 
   return (
@@ -59,6 +65,7 @@ const Todo = () => {
               name="todo"
               onChange={handleChange}
               placeholder="Add item here..."
+              style={{ padding: "10px" }}
             />
             <button type="submit">Submit</button>
           </form>
@@ -75,6 +82,7 @@ const Todo = () => {
                     setTodos={setTodos}
                     todos={todos}
                     key={todoItem.id}
+                    handleDelete={handleDelete}
                   />
                 );
               })}
